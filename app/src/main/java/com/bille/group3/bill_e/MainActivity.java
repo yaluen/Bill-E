@@ -64,16 +64,32 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         });
 
         // For each of the sections in the app, add a tab to the action bar.
-        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-            // Create a tab with text corresponding to the page title defined by
-            // the adapter. Also specify this Activity object, which implements
-            // the TabListener interface, as the callback (listener) for when
-            // this tab is selected.
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText(mSectionsPagerAdapter.getPageTitle(i))
-                            .setTabListener(this));
-        }
+//        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+//            // Create a tab with text corresponding to the page title defined by
+//            // the adapter. Also specify this Activity object, which implements
+//            // the TabListener interface, as the callback (listener) for when
+//            // this tab is selected.
+//            actionBar.addTab(
+//                    actionBar.newTab()
+//                            .setText(mSectionsPagerAdapter.getPageTitle(i))
+//                            .setTabListener(this));
+//        }
+        actionBar.addTab(
+                actionBar.newTab()
+                        .setIcon(android.R.drawable.ic_dialog_map)
+                        .setTabListener(this));
+        actionBar.addTab(
+                actionBar.newTab()
+                        .setIcon(android.R.drawable.ic_dialog_email)
+                        .setTabListener(this));
+        actionBar.addTab(
+                actionBar.newTab()
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setTabListener(this));
+        actionBar.addTab(
+                actionBar.newTab()
+                        .setIcon(android.R.drawable.ic_dialog_dialer)
+                        .setTabListener(this));
     }
 
 
