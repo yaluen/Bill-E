@@ -7,6 +7,8 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -43,6 +45,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#AAFF00")));
+        actionBar.setStackedBackgroundDrawable(new ColorDrawable(Color.parseColor("#AAFF00")));
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Create the adapter that will return a fragment for each of the three
@@ -74,21 +78,26 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 //                            .setText(mSectionsPagerAdapter.getPageTitle(i))
 //                            .setTabListener(this));
 //        }
+
+        int food_tab_id = getResources().getIdentifier("@drawable/food_tab_btn", null, getPackageName());
+        int home_tab_id = getResources().getIdentifier("@drawable/home_tab_btn", null, getPackageName());
+        int receipt_tab_id = getResources().getIdentifier("@drawable/receipt_tab_btn", null, getPackageName());
+        int scan_tab_id = getResources().getIdentifier("@drawable/scan_tab_btn", null, getPackageName());
         actionBar.addTab(
                 actionBar.newTab()
-                        .setIcon(android.R.drawable.ic_dialog_map)
+                        .setIcon(getResources().getDrawable(home_tab_id))
                         .setTabListener(this));
         actionBar.addTab(
                 actionBar.newTab()
-                        .setIcon(android.R.drawable.ic_dialog_email)
+                        .setIcon(getResources().getDrawable(food_tab_id))
                         .setTabListener(this));
         actionBar.addTab(
                 actionBar.newTab()
-                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setIcon(getResources().getDrawable(receipt_tab_id))
                         .setTabListener(this));
         actionBar.addTab(
                 actionBar.newTab()
-                        .setIcon(android.R.drawable.ic_dialog_dialer)
+                        .setIcon(getResources().getDrawable(scan_tab_id))
                         .setTabListener(this));
     }
 
