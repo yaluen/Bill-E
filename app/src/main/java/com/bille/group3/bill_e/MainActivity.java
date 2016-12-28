@@ -1,213 +1,199 @@
 package com.bille.group3.bill_e;
 
-import java.util.Locale;
-
-import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v13.app.FragmentPagerAdapter;
+import android.support.design.widget.TabLayout;
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 
-public class MainActivity extends Activity implements ActionBar.TabListener {
-
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v13.app.FragmentStatePagerAdapter}.
-     */
-    SectionsPagerAdapter mSectionsPagerAdapter;
+public class MainActivity extends AppCompatActivity {
 
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    ViewPager mViewPager;
+    private Toolbar toolbar;
+    private TabLayout mTabs;
+    private ViewPager mViewPager;
+    private int pagerIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Set up the action bar.
-        final ActionBar actionBar = getActionBar();
+
+        initActionBar();
+
+
+//        mViewPager = (ViewPager) findViewById(R.id.pager);
+        //setupViewPager(mViewPager);
+        setupTabLayout();
+
+    }
+
+    private void initActionBar(){
+        final ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#AAFF00")));
         actionBar.setStackedBackgroundDrawable(new ColorDrawable(Color.parseColor("#AAFF00")));
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setTitle(Html.fromHtml("<font color='#434343'> Bill-E </font>"));
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+//        toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        // Set an OnMenuItemClickListener to handle menu item clicks
+//        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                // Handle the menu item
+//                return true;
+//            }
+//        });
+//        // Inflate a menu to be displayed in the toolbar
+//        toolbar.inflateMenu(R.menu.menu_main);
+//        setSupportActionBar(toolbar);
+//
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
 
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close) {
+//            @Override
+//            public void onDrawerOpened(View drawerView) {
+//                super.onDrawerOpened(drawerView);
+//
+//            }
+//            @Override
+//            public void onDrawerClosed(View drawerView) {
+//                super.onDrawerClosed(drawerView);
+//            }
+//        };
+//        mActionBarDrawerToggle.syncState();
+//        mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
+    }
 
-        // When swiping between different sections, select the corresponding
-        // tab. We can also use ActionBar.Tab#select() to do this if we have
-        // a reference to the Tab.
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+    private void initViewPager(){
+        mTabs = (android.support.design.widget.TabLayout) findViewById(R.id.tabLayout);
+        mTabs.addTab(mTabs.newTab().setText("User Pattern"));
+        mTabs.addTab(mTabs.newTab().setText("Gateway"));
+        mTabs.addTab(mTabs.newTab().setText("Group"));
+
+
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mViewPager.setAdapter(new SamplePagerAdapter());
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabs));
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
+            public void onPageScrolled(int i, float v, int i2) {
+            }
+
+            @Override
+            public void onPageSelected(int pos) {
+                //Toast.makeText(ListActivity.this, "d"+pos, Toast.LENGTH_SHORT).show();
+                pagerIndex = pos;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
             }
         });
 
-        // For each of the sections in the app, add a tab to the action bar.
-//        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-//            // Create a tab with text corresponding to the page title defined by
-//            // the adapter. Also specify this Activity object, which implements
-//            // the TabListener interface, as the callback (listener) for when
-//            // this tab is selected.
-//            actionBar.addTab(
-//                    actionBar.newTab()
-//                            .setText(mSectionsPagerAdapter.getPageTitle(i))
-//                            .setTabListener(this));
-//        }
+        mTabs.setupWithViewPager(mViewPager);
 
-        int food_tab_id = getResources().getIdentifier("@drawable/food_tab_btn", null, getPackageName());
-        int home_tab_id = getResources().getIdentifier("@drawable/home_tab_btn", null, getPackageName());
-        int receipt_tab_id = getResources().getIdentifier("@drawable/receipt_tab_btn", null, getPackageName());
-        int scan_tab_id = getResources().getIdentifier("@drawable/scan_tab_btn", null, getPackageName());
-        actionBar.addTab(
-                actionBar.newTab()
-                        .setIcon(getResources().getDrawable(home_tab_id))
-                        .setTabListener(this));
-        actionBar.addTab(
-                actionBar.newTab()
-                        .setIcon(getResources().getDrawable(food_tab_id))
-                        .setTabListener(this));
-        actionBar.addTab(
-                actionBar.newTab()
-                        .setIcon(getResources().getDrawable(receipt_tab_id))
-                        .setTabListener(this));
-        actionBar.addTab(
-                actionBar.newTab()
-                        .setIcon(getResources().getDrawable(scan_tab_id))
-                        .setTabListener(this));
+        pagerIndex = 0;
+//        list_view = new ListView[3];
+//        listItemAdapter = new CustomAdapter[3];
+    }
+
+    private void setupTabLayout() {
+        mTabs = (TabLayout) findViewById(R.id.tabLayout);
+        mTabs.setTabGravity(TabLayout.GRAVITY_FILL);
+        mTabs.setupWithViewPager(mViewPager);
+        mTabs.addTab(mTabs.newTab());
+        mTabs.addTab(mTabs.newTab());
+        mTabs.addTab(mTabs.newTab());
+        mTabs.addTab(mTabs.newTab());
+
+        mTabs.getTabAt(0).setIcon(R.drawable.home_tab_btn);
+        mTabs.getTabAt(1).setIcon(R.drawable.food_tab_btn);
+        mTabs.getTabAt(2).setIcon(R.drawable.receipt_tab_btn);
+        mTabs.getTabAt(3).setIcon(R.drawable.scan_tab_btn);
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        // When the given tab is selected, switch to the corresponding page in
-        // the ViewPager.
-        mViewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
-        }
+    private class SamplePagerAdapter extends PagerAdapter {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 3;
         }
 
         @Override
-        public CharSequence getPageTitle(int position) {
-            Locale l = Locale.getDefault();
-            switch (position) {
-                case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
-                case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
-                case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
-            }
-            return null;
-        }
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
+        public boolean isViewFromObject(View view, Object o) {
+            return o == view;
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "User Pattern";
+                case 1:
+                    return "Gateway";
+                case 2:
+                    return "Group";
+                default:
+                    return "User Pattern";
+            }
+            //return "Item " + (position + 1);
         }
-    }
 
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            //Toast.makeText(ListActivity.this, "instantiateItem", Toast.LENGTH_SHORT).show();
+
+//            View view = getLayoutInflater().inflate(R.layout.pager_item, container, false);
+//            container.addView(view);
+//
+//
+//            list_view[position] = (ListView) view.findViewById(R.id.list);
+//            list_view[position].setOnScrollListener(new AbsListView.OnScrollListener() {
+//                @Override
+//                public void onScrollStateChanged(AbsListView view, int scrollState) {
+//                }
+//
+//                @Override
+//                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+//                    //Log.v("SCROLL", ""+firstVisibleItem);
+//                    if ( (firstVisibleItem == 0 && lastVisible == 1) || (firstVisibleItem == 0 && lastVisible == 0) ) {
+//                        mSwipeRefreshLayout.setEnabled(true);
+//                    } else {
+//                        mSwipeRefreshLayout.setEnabled(false);
+//                    }
+//                    lastVisible = firstVisibleItem;
+//                }
+//            });
+//
+//            showGroup(view, position);
+//            return view;
+            return null;
+        }
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
+    }
 }
