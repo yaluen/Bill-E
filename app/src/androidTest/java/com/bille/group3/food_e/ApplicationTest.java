@@ -1,4 +1,4 @@
-package com.bille.group3.bill_e;
+package com.bille.group3.food_e;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
