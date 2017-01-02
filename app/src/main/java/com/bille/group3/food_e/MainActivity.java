@@ -81,5 +81,4 @@ public class MainActivity extends AppCompatActivity {
         mTabs.getTabAt(2).setIcon(R.drawable.receipt_tab_btn);
         mTabs.getTabAt(3).setIcon(R.drawable.scan_tab_btn);
     }
-
 }
