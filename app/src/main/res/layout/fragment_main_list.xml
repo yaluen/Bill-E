@@ -20,30 +20,38 @@
         android:ems="10"
         android:id="@+id/mainSearchBar" />
 
-    <TableLayout
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:shrinkColumns="*"
-        android:stretchColumns="*">
+        android:layout_height="match_parent"
+        android:id="@+id/mainFoodListView">
 
-        <TableRow
-            android:id="@+id/headerTableReceipts"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <TextView
-                android:text="@string/receipt_col_0"
-                android:layout_gravity="center_horizontal" />
+    </ListView>
 
-            <TextView
-                android:text="@string/receipt_col_1"
-                android:layout_gravity="center_horizontal" />
+    <!--<TableLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:shrinkColumns="*"-->
+        <!--android:stretchColumns="*">-->
 
-            <TextView
-                android:text="@string/receipt_col_2"
-                android:layout_gravity="center_horizontal" />
-        </TableRow>
-    </TableLayout>
+        <!--<TableRow-->
+            <!--android:id="@+id/headerTableReceipts"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+
+            <!--<TextView-->
+                <!--android:text="@string/receipt_col_0"-->
+                <!--android:layout_gravity="center_horizontal" />-->
+
+            <!--<TextView-->
+                <!--android:text="@string/receipt_col_1"-->
+                <!--android:layout_gravity="center_horizontal" />-->
+
+            <!--<TextView-->
+                <!--android:text="@string/receipt_col_2"-->
+                <!--android:layout_gravity="center_horizontal" />-->
+        <!--</TableRow>-->
+    <!--</TableLayout>-->
 
 
 
