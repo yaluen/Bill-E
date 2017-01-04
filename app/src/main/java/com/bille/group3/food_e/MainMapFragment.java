@@ -2,6 +2,7 @@ package com.bille.group3.food_e;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,11 +60,16 @@ public class MainMapFragment extends Fragment implements TextView.OnEditorAction
         sharedFoods.add(new SharedFood("Free pizza for everyone", new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(),
                 new GregorianCalendar(2014, Calendar.FEBRUARY, 18).getTime(), "NTU CSIE Building", "shared_pizza"));
 
+        displayedItems.clear();
+        displayedItems.addAll(sharedFoods);
 
-        ArrayAdapter<SharedFood> adapter = new SharedFoodArrayAdapter(this.getContext(), 0, sharedFoods);
+        ArrayAdapter<SharedFood> adapter = new SharedFoodArrayAdapter(this.getContext(), 0, displayedItems);
 
         mListView = (ListView) v.findViewById(R.id.mainFoodListView);
         mListView.setAdapter(adapter);
+
+        EditText edit = (EditText) v.findViewById(R.id.mainSearchBar);
+        edit.setOnEditorActionListener(this);
 
         return v;
     }
@@ -72,12 +79,12 @@ public class MainMapFragment extends Fragment implements TextView.OnEditorAction
         if(i == EditorInfo.IME_ACTION_DONE)
         {
             final View view = textView.getRootView();
-            final  CharSequence search = textView.getText();
+            final CharSequence search = textView.getText();
             //Basic search
             final List<SharedFood> foundElements = new LinkedList();
             for(SharedFood b:sharedFoods)
             {
-                if(b.getSearchString().contains(search))
+                if(b.getSearchString().toLowerCase().contains(search.toString().toLowerCase()))
                 {
                     foundElements.add(b);
                 }
@@ -87,8 +94,6 @@ public class MainMapFragment extends Fragment implements TextView.OnEditorAction
                 displayedItems.clear();
                 displayedItems.addAll(foundElements);
 //                Collections.sort(foundElements,Bill.getDateComperator());
-                ArrayAdapter<SharedFood> adapter = new SharedFoodArrayAdapter(this.getContext(), 0, displayedItems);
-                mListView.setAdapter(adapter);
 
                 ((BaseAdapter) mListView.getAdapter()).notifyDataSetChanged();
             }

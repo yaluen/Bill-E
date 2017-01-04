@@ -18,6 +18,7 @@
         android:inputType="text"
         android:hint="@string/hint_receipt"
         android:ems="10"
+        android:imeOptions="actionDone"
         android:id="@+id/mainSearchBar" />
 
     <ListView
