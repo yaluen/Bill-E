@@ -44,7 +44,10 @@ public class SharedFood implements Serializable
         this.expiration = null;
         this.location = null;
     }
-
+    public String getSearchString()
+    {
+        return description + " " + location;
+    }
     private byte[] getByteArray(Bitmap bitmap)
     {
         ByteArrayOutputStream bs = new ByteArrayOutputStream();
