@@ -2,15 +2,23 @@ package com.bille.group3.food_e;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Alan on 2017/01/01.
@@ -18,9 +26,12 @@ import java.util.GregorianCalendar;
  * Will (for now) handle both the List display and Map display.
  */
 
-public class MainMapFragment extends Fragment{
+public class MainMapFragment extends Fragment implements TextView.OnEditorActionListener
+{
 
     private ArrayList<SharedFood> sharedFoods = new ArrayList<>();
+    private ArrayList<SharedFood> displayedItems = new ArrayList<>();
+    private ListView mListView;
 
     public static MainMapFragment newInstance()
     {
@@ -50,9 +61,43 @@ public class MainMapFragment extends Fragment{
 
         ArrayAdapter<SharedFood> adapter = new SharedFoodArrayAdapter(this.getContext(), 0, sharedFoods);
 
-        ListView listView = (ListView) v.findViewById(R.id.mainFoodListView);
-        listView.setAdapter(adapter);
+        mListView = (ListView) v.findViewById(R.id.mainFoodListView);
+        mListView.setAdapter(adapter);
 
         return v;
+    }
+
+    @Override
+    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+        if(i == EditorInfo.IME_ACTION_DONE)
+        {
+            final View view = textView.getRootView();
+            final  CharSequence search = textView.getText();
+            //Basic search
+            final List<SharedFood> foundElements = new LinkedList();
+            for(SharedFood b:sharedFoods)
+            {
+                if(b.getSearchString().contains(search))
+                {
+                    foundElements.add(b);
+                }
+            }
+            if(foundElements.size() != 0)
+            {
+                displayedItems.clear();
+                displayedItems.addAll(foundElements);
+//                Collections.sort(foundElements,Bill.getDateComperator());
+                ArrayAdapter<SharedFood> adapter = new SharedFoodArrayAdapter(this.getContext(), 0, displayedItems);
+                mListView.setAdapter(adapter);
+
+                ((BaseAdapter) mListView.getAdapter()).notifyDataSetChanged();
+            }
+            else
+            {
+                Toast.makeText(view.getContext(), R.string.receipt_search_fail,Toast.LENGTH_LONG);
+            }
+            return false;
+        }
+        return true;
     }
 }

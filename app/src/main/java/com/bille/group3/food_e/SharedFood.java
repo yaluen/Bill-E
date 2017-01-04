@@ -44,6 +44,10 @@ public class SharedFood {
     public Date getCreation() {return creation; }
     public String getDescription() {return description; }
     public String getImage() { return image; }
+    public String getSearchString() {
+        return description + " " + location;
+    }
+
     /*Setter*/
     public void setDescription(String description) {
         this.description = description;
