@@ -1,5 +1,7 @@
 package com.bille.group3.food_e;
 
+import android.graphics.Bitmap;
+
 import java.util.Date;
 
 /**
@@ -8,23 +10,54 @@ import java.util.Date;
 
 public class SharedFood {
     private String description;
+    private String category;
+    private Bitmap bitmap;
     private Date expiration;
     private Date creation;
     private String location;
     private String image;
-
-    public SharedFood(String descript, Date create, Date expire, String locat, String img)
-    {
-        description = descript;
-        creation = create;
-        expiration = expire;
-        location = locat;
-        image = img;
+    /*Constructors*/
+    public SharedFood(String description, Date creation, Date expiration, String location, String image) {
+        this.description = description;
+        this.creation = creation;
+        this.expiration = expiration;
+        this.location = location;
+        this.image = image;
     }
-
+    public SharedFood(String description, String category, Bitmap preview, Date expiration, String location)
+    {
+        this.description = description;
+        this.category = category;
+        this.bitmap = preview;
+        this.expiration = expiration;
+        this.location = location;
+    }
+    /*Getter*/
+    public String getCategory() {
+        return category;
+    }
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
     public String getLocation() {return location; }
     public Date getExpiration() {return expiration; }
     public Date getCreation() {return creation; }
     public String getDescription() {return description; }
     public String getImage() { return image; }
+    /*Setter*/
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public void setCategory(String category) {
+        this.category = category;
+    }
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
+    public void setExpiration(Date expiration) {
+        this.expiration = expiration;
+    }
+    public void setLocation(String location) {
+        this.location = location;
+    }
 }

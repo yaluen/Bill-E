@@ -18,8 +18,8 @@ public class GenericPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        MainMapFragment tab1 = new MainMapFragment();
         ReceiptSearchFragment tab3= ReceiptSearchFragment.newInstance();
+        Fragment tab1 = (Fragment) ShareFoodListFragment.newInstance();
         switch (position) {
             case 0:
                 return tab1;

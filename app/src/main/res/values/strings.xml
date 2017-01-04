@@ -17,6 +17,9 @@
     <string name="receipt_col_1">Store</string>
     <string name="receipt_col_2">Total</string>
     <string name="receipt_search_fail">No Element found</string>
+    <!--Strings Share Food-->
+    <string name="share_description_header">Description</string>
+    <string name="share_category_header">Category</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
