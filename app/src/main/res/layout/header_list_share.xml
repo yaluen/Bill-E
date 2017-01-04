@@ -5,7 +5,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Share Food"
+        android:text="Your Shared Food(s)"
         android:textSize="28sp"
         android:gravity="center_horizontal"
         android:textStyle="bold"

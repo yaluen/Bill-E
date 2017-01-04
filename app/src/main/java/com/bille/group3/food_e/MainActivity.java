@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (position == 2) {
                     actionBar.setTitle(Html.fromHtml("<font color='#434343'> View Receipts </font>"));
                 } else if (position == 3) {
-                    actionBar.setTitle(Html.fromHtml("<font color='#434343'> E-Receipt Scan </font>"));
+                    actionBar.setTitle(Html.fromHtml("<font color='#434343'> E-Receipt Code </font>"));
                 }
 
             }

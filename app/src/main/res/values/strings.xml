@@ -2,9 +2,6 @@
 <resources>
 
     <string name="app_name">Food-E</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
     <string name="action_settings">Settings</string>
     <!--Strings receipt search -->
     <string name="hint_receipt">Enter text for search</string>
