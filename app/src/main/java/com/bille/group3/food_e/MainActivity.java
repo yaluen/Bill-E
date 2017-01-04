@@ -10,11 +10,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 
 
 public class MainActivity extends AppCompatActivity {
     private TabLayout mTabs;
     private ViewPager mViewPager;
+    public ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initActionBar(){
-        final ActionBar actionBar = getSupportActionBar();
+        actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#AAFF00")));
         actionBar.setStackedBackgroundDrawable(new ColorDrawable(Color.parseColor("#AAFF00")));
         actionBar.setTitle(Html.fromHtml("<font color='#434343'> Food-E </font>"));
@@ -70,6 +72,37 @@ public class MainActivity extends AppCompatActivity {
     private void initViewPager(){
         final PagerAdapter adapter = new GenericPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(adapter);
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            // This method will be invoked when a new page becomes selected.
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    actionBar.setTitle(Html.fromHtml("<font color='#434343'> Food-E </font>"));
+                } else if (position == 1) {
+                    actionBar.setTitle(Html.fromHtml("<font color='#434343'> Share Food </font>"));
+                } else if (position == 2) {
+                    actionBar.setTitle(Html.fromHtml("<font color='#434343'> View Receipts </font>"));
+                } else if (position == 3) {
+                    actionBar.setTitle(Html.fromHtml("<font color='#434343'> E-Receipt Scan </font>"));
+                }
+
+            }
+
+            // This method will be invoked when the current page is scrolled
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                // Code goes here
+            }
+
+            // Called when the scroll state changes:
+            // SCROLL_STATE_IDLE, SCROLL_STATE_DRAGGING, SCROLL_STATE_SETTLING
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                // Code goes here
+            }
+        });
     }
 
     private void initTabLayout() {

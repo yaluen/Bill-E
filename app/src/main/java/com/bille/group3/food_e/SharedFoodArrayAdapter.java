@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,8 +56,7 @@ public class SharedFoodArrayAdapter extends ArrayAdapter<SharedFood> {
             description.setText(foodItem.getDescription());
         }
 
-        //set price and rental attributes
-        expire.setText(foodItem.getExpiration().toString());
+        expire.setText("Expires: " + new SimpleDateFormat("MM.dd.yyy HH:mm").format(foodItem.getExpiration()));
 
         //get the image associated with this property
         int imageID = context.getResources().getIdentifier(foodItem.getImage(), "drawable", context.getPackageName());
