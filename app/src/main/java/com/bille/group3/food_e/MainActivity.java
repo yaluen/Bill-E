@@ -1,5 +1,6 @@
 package com.bille.group3.food_e;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.TabLayout;
@@ -8,9 +9,8 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -22,10 +22,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         mTabs = (TabLayout) findViewById(R.id.tabLayout);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
-
         initActionBar();
         initViewPager();
         initTabLayout();
@@ -78,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
             // This method will be invoked when a new page becomes selected.
             @Override
             public void onPageSelected(int position) {
+
+                final InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(mViewPager.getWindowToken(), 0);
+
                 if (position == 0) {
                     actionBar.setTitle(Html.fromHtml("<font color='#434343'> Food-E </font>"));
                 } else if (position == 1) {
