@@ -1,0 +1,27 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.bille.group3.food_e.BarcodeFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_gravity="center_vertical"
+        app:srcCompat="@drawable/ic_code243284e954e55aba28ab2b6896d9720e"
+        android:id="@+id/imageView"
+        android:padding="5dp"/>
+    <TextView
+        android:layout_marginBottom="60dp"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="A14051994D"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        />
+</FrameLayout>

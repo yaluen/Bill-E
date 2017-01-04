@@ -20,6 +20,22 @@
     <!--Strings Share Food-->
     <string name="share_description_header">Description</string>
     <string name="share_category_header">Category</string>
+    <string name="share_add_hint_description">Enter short description of food to share</string>
+    <string name="expire">Expiry Date</string>
+    <string name="available">Available</string>
+    <string name="share_date_hint">10/22/2016</string>
+    <string name="share_time_hint_from">10:00</string>
+    <string name="share_time_hint_to">15:00</string>
+    <string name="share_time_to">to</string>
+    <string-array name="category_options">
+        <item>Meal</item>
+        <item>Drink</item>
+        <item>Fruit</item>
+        <item>Vegetables</item>
+        <item>Meat</item>
+        <item>Vegetarian</item>
+        <item>Dessert</item>
+    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

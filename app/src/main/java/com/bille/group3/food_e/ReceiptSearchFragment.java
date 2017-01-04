@@ -205,9 +205,9 @@ public class ReceiptSearchFragment extends Fragment implements TextView.OnEditor
             for(Bill b:testdata)
             {
                 if(dateformat.format(b.getDate()).contains(search) ||
-                        b.getLocation().contains(search) ||
+                        b.getLocation().toLowerCase().contains(search) ||
                         Integer.toString(b.getTotal()).contains(search)||
-                        b.getDetails().contains(search))
+                        b.getDetails().toLowerCase().contains(search))
                 {
                     foundElements.add(b);
                 }
@@ -221,7 +221,7 @@ public class ReceiptSearchFragment extends Fragment implements TextView.OnEditor
             }
             else
             {
-                Toast.makeText(view.getContext(), R.string.receipt_search_fail,Toast.LENGTH_LONG);
+                Toast.makeText(view.getContext(), R.string.receipt_search_fail,Toast.LENGTH_LONG).show();
             }
             return false;
         }

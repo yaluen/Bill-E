@@ -1,14 +1,14 @@
 package com.bille.group3.food_e;
 
 import android.app.Activity;
-import android.support.annotation.Nullable;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v4.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,8 +30,11 @@ public class ShareFoodListFragment extends ListFragment
 {
     private final ArrayList<SharedFood> list = new ArrayList<>();
     private shareFoodAdapter adapter;
-    private final static int REQUEST_IMAGE_CAPTURE =1;
+    public final static int REQUEST_IMAGE_CAPTURE = 1;
+    private final static int REQUEST_DETAILS = 2;
     private View header;
+    private int editPos= -1;
+    private SharedFood editFood = null;
     public void ShareFoodListFragment()
     {
         //Required Emty constructor
@@ -42,14 +45,12 @@ public class ShareFoodListFragment extends ListFragment
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
-
     }
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -64,40 +65,81 @@ public class ShareFoodListFragment extends ListFragment
             @Override
             public void onClick(View view)
             {
-                //TODO start activity to get picture
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
         });
         return v;
     }
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
         getListView().addHeaderView(header);
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK)
+        {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            SharedFood food = new SharedFood("A new Item","Item",imageBitmap,null,"loc");
-            list.add(food);
-            adapter.notifyDataSetChanged();
+            SharedFood food = new SharedFood(imageBitmap);
+            Intent setDataIntent = new Intent(getActivity(),SharedFoodAddActivity.class);
+            setDataIntent.putExtra(SharedFoodAddActivity.SHARE_FOOD_EXTRA,food);
+            startActivityForResult(setDataIntent,REQUEST_DETAILS);
+        }
+        else
+        {
+            if (requestCode == REQUEST_DETAILS && resultCode == Activity.RESULT_OK)
+            {
+                Bundle extras = data.getExtras();
+                SharedFood add = (SharedFood) extras.get(SharedFoodAddActivity.SHARE_FOOD_EXTRA_RESULT);
+                list.add(add);
+                adapter.notifyDataSetChanged();
+                editFood = null;
+            } else
+            {
+                //If edditing went wrong add element that user wanted to element again to list where it was removed
+                if (requestCode == REQUEST_DETAILS && editPos != -1)
+                {
+                    list.add(editPos,editFood);
+                    adapter.notifyDataSetChanged();
+                    editFood = null;
+                    editPos = -1;
+                }
+            }
         }
     }
-
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id)
+    public void onListItemClick(ListView l, View v, final int position, long id)
     {
-        //TODO implement dialog to remove/update entree
-        super.onListItemClick(l, v, position, id);
+        final int pos = position-1;
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Change Element");
+        builder.setMessage("Do you want to change the element ?").setCancelable(true);
+        builder.setPositiveButton("Edit",new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog,int id)
+            {
+                editPos = pos;
+                editFood = adapter.getItem(pos);
+                adapter.getItem(pos);
+                Intent setDataIntent = new Intent(getActivity(),SharedFoodAddActivity.class);
+                setDataIntent.putExtra(SharedFoodAddActivity.SHARE_FOOD_EXTRA,editFood);
+                adapter.remove(editFood);
+                startActivityForResult(setDataIntent,REQUEST_DETAILS);
+            }
+        });
+        builder.setNegativeButton("Delete",new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog,int id)
+            {
+                adapter.remove(adapter.getItem(pos));
+            }
+        });
+        builder.create().show();
     }
-
     private class  shareFoodAdapter extends ArrayAdapter<SharedFood>
     {
         private final Context context;
@@ -125,27 +167,4 @@ public class ShareFoodListFragment extends ListFragment
             return rowView;
         }
     }
-    /*private class ViewHolder
-    {
-        private ImageView img;
-        private TextView line1,line2;
-        public ViewHolder(View row)
-        {
-            this.img = (ImageView) row.findViewById(R.id.icon);
-            this.line1 = (TextView) row.findViewById(R.id.firstLine);
-            this.line2 = (TextView) row.findViewById(R.id.secondLine);
-        }
-        public ImageView getImageView()
-        {
-            return img;
-        }
-        public TextView getLine1()
-        {
-            return line1;
-        }
-        public TextView getLine2()
-        {
-            return line2;
-        }
-    }*/
 }

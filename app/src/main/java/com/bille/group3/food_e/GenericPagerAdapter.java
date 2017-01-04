@@ -17,22 +17,19 @@ public class GenericPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
-        ReceiptSearchFragment tab3= ReceiptSearchFragment.newInstance();
-        Fragment tab2 = (Fragment) ShareFoodListFragment.newInstance();
-        MainMapFragment tab1 = MainMapFragment.newInstance();
+    public Fragment getItem(int position)
+    {
         switch (position) {
             case 0:
-                return tab1;
+                return MainMapFragment.newInstance();
             case 1:
-                return tab2;
+                return  ShareFoodListFragment.newInstance();
             case 2:
-                return tab3;
-//            case 3:
-//                TabFragment3 tab3 = new TabFragment3();
-//                return tab3;
+                return ReceiptSearchFragment.newInstance();
+            case 3:
+                return BarcodeFragment.newInstance();
             default:
-                return tab1;
+                return MainMapFragment.newInstance();
         }
     }
 

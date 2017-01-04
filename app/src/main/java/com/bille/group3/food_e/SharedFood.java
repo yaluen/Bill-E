@@ -1,22 +1,34 @@
 package com.bille.group3.food_e;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
+import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Loh-Shilin on 2017/01/02.
  */
 
-public class SharedFood {
-    private String description;
-    private String category;
-    private Bitmap bitmap;
-    private Date expiration;
-    private Date creation;
-    private String location;
-    private String image;
+public class SharedFood implements Serializable
+{
+
+    private String description = null;
+    private String category = null;
+    private byte[] bitmap = null;
+    private Date expiration = null;
+    private Date creation = null;
+    private String location = null;
+    private String image = null;
+    private String from = null;
+    private String to = null;
     /*Constructors*/
+
+    public SharedFood()
+    {
+    }
+
     public SharedFood(String description, Date creation, Date expiration, String location, String image) {
         this.description = description;
         this.creation = creation;
@@ -24,30 +36,39 @@ public class SharedFood {
         this.location = location;
         this.image = image;
     }
-    public SharedFood(String description, String category, Bitmap preview, Date expiration, String location)
+    public SharedFood(Bitmap bitmap)
     {
-        this.description = description;
-        this.category = category;
-        this.bitmap = preview;
-        this.expiration = expiration;
-        this.location = location;
+        this.description = null;
+        this.category = null;
+        this.bitmap = getByteArray(bitmap);
+        this.expiration = null;
+        this.location = null;
     }
+
+    private byte[] getByteArray(Bitmap bitmap)
+    {
+        ByteArrayOutputStream bs = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,50,bs);
+        return bs.toByteArray();
+    }
+
     /*Getter*/
     public String getCategory() {
         return category;
     }
-    public Bitmap getBitmap() {
-        return bitmap;
+    public Bitmap getBitmap()
+    {
+        return BitmapFactory.decodeByteArray(bitmap,0,bitmap.length);
     }
     public String getLocation() {return location; }
     public Date getExpiration() {return expiration; }
     public Date getCreation() {return creation; }
     public String getDescription() {return description; }
     public String getImage() { return image; }
-    public String getSearchString() {
-        return description + " " + location;
+    public String getFrom() {
+    return from;}
+    public String getTo() {return to;
     }
-
     /*Setter*/
     public void setDescription(String description) {
         this.description = description;
@@ -55,13 +76,17 @@ public class SharedFood {
     public void setCategory(String category) {
         this.category = category;
     }
-    public void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
+    public void setBitmap(Bitmap bitmap)
+    {
+        this.bitmap = getByteArray(bitmap);
     }
-    public void setExpiration(Date expiration) {
-        this.expiration = expiration;
+    public void setCreation(Date creation) {
+        this.creation = creation;
     }
-    public void setLocation(String location) {
-        this.location = location;
+    public void setTo(String to) {
+        this.to = to;
+    }
+    public void setFrom(String from) {
+        this.from = from;
     }
 }

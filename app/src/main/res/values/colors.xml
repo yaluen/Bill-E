@@ -8,4 +8,5 @@
     <color name="grid_1">#f5f5f5</color>
     <color name="grid_2">#eeeeee</color>
     <color name="back_table">#9E9E9E</color>
+    <color name="actionbar">#434343</color>
 </resources>
