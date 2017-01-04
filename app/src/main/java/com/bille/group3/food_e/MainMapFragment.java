@@ -22,8 +22,18 @@ public class MainMapFragment extends Fragment{
 
     private ArrayList<SharedFood> sharedFoods = new ArrayList<>();
 
+    public static MainMapFragment newInstance()
+    {
+        MainMapFragment fragment = new MainMapFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View v = inflater.inflate(R.layout.fragment_main_list, container, false);
 
         sharedFoods.add(new SharedFood("Apples for sale 30% off", new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(),
                 new GregorianCalendar(2014, Calendar.FEBRUARY, 23).getTime(), "Shilin Carrefour", "shared_apples"));
@@ -40,9 +50,9 @@ public class MainMapFragment extends Fragment{
 
         ArrayAdapter<SharedFood> adapter = new SharedFoodArrayAdapter(this.getContext(), 0, sharedFoods);
 
-        ListView listView = (ListView) getView().findViewById(R.id.mainFoodListView);
+        ListView listView = (ListView) v.findViewById(R.id.mainFoodListView);
         listView.setAdapter(adapter);
 
-        return inflater.inflate(R.layout.fragment_main_map, container, false);
+        return v;
     }
 }

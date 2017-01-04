@@ -41,7 +41,7 @@ public class SharedFoodArrayAdapter extends ArrayAdapter<SharedFood> {
         TextView description = (TextView) view.findViewById(R.id.listFoodDescription);
         TextView expire = (TextView) view.findViewById(R.id.listFoodExpireDate);
         TextView location = (TextView) view.findViewById(R.id.listFoodLocation);
-        ImageView image = (ImageView) view.findViewById(R.id.image);
+        ImageView image = (ImageView) view.findViewById(R.id.listFoodImage);
 
         //set address and description
         location.setText(foodItem.getLocation());
