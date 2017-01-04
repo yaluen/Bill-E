@@ -18,17 +18,16 @@ public class GenericPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        //MainMapFragment tab1 = new MainMapFragment();
-        ReceiptSearchFragment tab1= ReceiptSearchFragment.newInstance();
+        MainMapFragment tab1 = new MainMapFragment();
+        ReceiptSearchFragment tab3= ReceiptSearchFragment.newInstance();
         switch (position) {
             case 0:
                 return tab1;
 //            case 1:
 //                TabFragment2 tab2 = new TabFragment2();
 //                return tab2;
-//            case 2:
-//                TabFragment3 tab3 = new TabFragment3();
-//                return tab3;
+            case 2:
+                return tab3;
 //            case 3:
 //                TabFragment3 tab3 = new TabFragment3();
 //                return tab3;
