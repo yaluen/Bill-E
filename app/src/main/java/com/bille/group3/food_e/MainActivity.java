@@ -26,11 +26,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mTabs = (TabLayout) findViewById(R.id.tabLayout);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+            {
+            }
+            @Override
+            public void onPageSelected(int position)
+            {
+                final InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(mViewPager.getWindowToken(), 0);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state)
+            {
+            }
+        });
         initActionBar();
         initViewPager();
         initTabLayout();
     }
-
     private void initActionBar(){
         actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#AAFF00")));
@@ -112,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
     private void initTabLayout() {
         mTabs.setTabGravity(TabLayout.GRAVITY_FILL);
         mTabs.setupWithViewPager(mViewPager);
-
         mTabs.getTabAt(0).setIcon(R.drawable.home_tab_btn);
         mTabs.getTabAt(1).setIcon(R.drawable.food_tab_btn);
         mTabs.getTabAt(2).setIcon(R.drawable.receipt_tab_btn);

@@ -24,7 +24,6 @@ public class MainMapActivity extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (view != null) {
             ViewGroup parent = (ViewGroup) view.getParent();
             if (parent != null) {
@@ -60,12 +59,13 @@ public class MainMapActivity extends Fragment implements OnMapReadyCallback {
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng taipei = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(taipei).title("7 Fresh Apples "));
-        LatLng taipei_1 = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(taipei_1).title("3 Mangoes "));
-        LatLng taipei_2 = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(taipei_2).title("Anything take away free "));
+        LatLng taipei = new LatLng(25.037712, 121.505814);
+        mMap.addMarker(new MarkerOptions().position(taipei).title("Apples for sale 30% off"));
+        LatLng taipei_1 = new LatLng(24.976198, 121.546547);
+        mMap.addMarker(new MarkerOptions().position(taipei_1).title("Oranges for sale 30% off"));
+        LatLng taipei_2 = new LatLng(25.014726, 121.530278);
+        mMap.addMarker(new MarkerOptions().position(taipei_2).title("Half pizza"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(taipei));
+
     }
 }

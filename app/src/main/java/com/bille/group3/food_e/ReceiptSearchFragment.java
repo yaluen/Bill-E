@@ -1,6 +1,9 @@
 package com.bille.group3.food_e;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Layout;
@@ -131,7 +134,6 @@ public class ReceiptSearchFragment extends Fragment implements TextView.OnEditor
         displayNewTable(v,displayedItems);
         EditText edit = (EditText) v.findViewById(R.id.receiptSearchBar);
         edit.setOnEditorActionListener(this);
-        // Inflate the layout for this fragment
         return v;
     }
     @Override
@@ -176,13 +178,29 @@ public class ReceiptSearchFragment extends Fragment implements TextView.OnEditor
             price.setTextSize(CONTENT_TEXTSIZE);
             price.setGravity(Gravity.CENTER);
             //Set row id and on click listener
+            final TextView msg = new TextView(c);
+            msg.setText(builtTextToDisplay(i));
+            msg.setPadding(10, 10, 10, 10);
+            msg.setGravity(Gravity.LEFT);
+            msg.setTextSize(18);
             row.setClickable(true);
             row.setId(i);
             row.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view)
                 {
-                    //TODO Make dialog which displays details
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Change Element");
+                    builder.setView(msg).setCancelable(true);
+                    builder.setPositiveButton("close",new DialogInterface.OnClickListener()
+                    {
+                        public void onClick(DialogInterface dialog,int id)
+                        {
+                            dialog.cancel();
+                        }
+                    });
+                    final AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             });
             //Add text fields to row
@@ -192,6 +210,29 @@ public class ReceiptSearchFragment extends Fragment implements TextView.OnEditor
             //add row to table
             table.addView(row);
         }
+    }
+    private CharSequence builtTextToDisplay(int pos)
+    {
+        Bill bill = displayedItems.get(pos);
+        StringBuilder b = new StringBuilder();
+        b.append("Location:          ");
+        b.append(bill.getLocation()+"\n");
+        b.append("date                  ");
+        b.append(dateformat.format(bill.getDate())+"\n");
+        b.append("Total:                ");
+        b.append(bill.getTotal()+"\n\n");
+        b.append("Details \n");
+        String details = bill.getDetails();
+        String [] detailsSplit = details.split(",");
+        for(String s :detailsSplit)
+        {
+            String [] singleDetailArray = s.split(" ");
+            if(singleDetailArray.length == 2)
+            {
+                b.append(singleDetailArray[0]+"          "+singleDetailArray[1]+"\n");
+            }
+        }
+        return b.toString();
     }
     @Override
     public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent)
