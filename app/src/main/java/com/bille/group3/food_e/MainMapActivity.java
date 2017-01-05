@@ -100,16 +100,16 @@ public class MainMapActivity extends Fragment implements OnMapReadyCallback {
     private void setUpMarker() {
 
         sharedFoods.add(new SharedFood("Apples for sale 30% off", new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(),
-                new GregorianCalendar(2014, Calendar.FEBRUARY, 23).getTime(), "Shilin Carrefour", "shared_apples"));
+                new GregorianCalendar(2014, Calendar.FEBRUARY, 23).getTime(), "WanHua 7-11", "shared_apples"));
 
         sharedFoods.add(new SharedFood("Oranges for sale 30% off", new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(),
-                new GregorianCalendar(2014, Calendar.FEBRUARY, 23).getTime(), "Shilin Carrefour", "shared_oranges"));
+                new GregorianCalendar(2014, Calendar.FEBRUARY, 23).getTime(), "XinDian Carrefour", "shared_oranges"));
 
         sharedFoods.add(new SharedFood("Peaches for sale 30% off", new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(),
-                new GregorianCalendar(2014, Calendar.FEBRUARY, 23).getTime(), "Shilin Carrefour", "shared_peaches"));
+                new GregorianCalendar(2014, Calendar.FEBRUARY, 23).getTime(), "ShiDa Night Market", "shared_peaches"));
 
         sharedFoods.add(new SharedFood("Free pizza for everyone", new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(),
-                new GregorianCalendar(2014, Calendar.FEBRUARY, 18).getTime(), "NTU CSIE Building", "shared_pizza"));
+                new GregorianCalendar(2014, Calendar.FEBRUARY, 18).getTime(), "Beitou Cake House", "shared_pizza"));
 
     }
 
@@ -137,7 +137,7 @@ public class MainMapActivity extends Fragment implements OnMapReadyCallback {
             ImageView image = (ImageView) myContentsView.findViewById(R.id.listFoodImage);
 
             //set address and description
-            location.setText(foodItem.getLocation());
+            location.setText("Location: " + foodItem.getLocation());
 
             //display trimmed excerpt for description
             int descriptionLength = foodItem.getDescription().length();
