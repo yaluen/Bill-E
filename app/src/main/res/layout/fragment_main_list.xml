@@ -3,15 +3,6 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ToggleButton
-        android:text="ToggleButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textOn="List View"
-        android:textOff="Map View"
-        android:checked="true"
-        android:id="@+id/mainToggleButton" />
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,34 +17,6 @@
         android:layout_height="match_parent"
         android:id="@+id/mainFoodListView">
 
-
     </ListView>
-
-    <!--<TableLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:shrinkColumns="*"-->
-        <!--android:stretchColumns="*">-->
-
-        <!--<TableRow-->
-            <!--android:id="@+id/headerTableReceipts"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent">-->
-
-            <!--<TextView-->
-                <!--android:text="@string/receipt_col_0"-->
-                <!--android:layout_gravity="center_horizontal" />-->
-
-            <!--<TextView-->
-                <!--android:text="@string/receipt_col_1"-->
-                <!--android:layout_gravity="center_horizontal" />-->
-
-            <!--<TextView-->
-                <!--android:text="@string/receipt_col_2"-->
-                <!--android:layout_gravity="center_horizontal" />-->
-        <!--</TableRow>-->
-    <!--</TableLayout>-->
-
-
 
 </LinearLayout>

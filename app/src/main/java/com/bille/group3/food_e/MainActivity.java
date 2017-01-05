@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.TabLayout;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -115,5 +117,18 @@ public class MainActivity extends AppCompatActivity {
         mTabs.getTabAt(1).setIcon(R.drawable.food_tab_btn);
         mTabs.getTabAt(2).setIcon(R.drawable.receipt_tab_btn);
         mTabs.getTabAt(3).setIcon(R.drawable.scan_tab_btn);
+    }
+
+    public void replaceFragments(Class fragmentClass) {
+        Fragment fragment = null;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.viewpager, fragment)
+                .commit();
     }
 }

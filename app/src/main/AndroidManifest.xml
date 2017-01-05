@@ -27,6 +27,9 @@
             android:windowSoftInputMode="stateAlwaysHidden">
 
         </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCvhwHxoECgKo91FOVUYjB6-Ndaife8BbY"/>
     </application>
 
 </manifest>

@@ -2,7 +2,6 @@ package com.bille.group3.food_e;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,30 +13,27 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by Alan on 2017/01/01.
- *
- * Will (for now) handle both the List display and Map display.
+ * Created by hduser on 1/5/17.
  */
 
-public class MainMapFragment extends Fragment implements TextView.OnEditorActionListener
-{
+public class MainListFragment extends Fragment implements TextView.OnEditorActionListener{
 
     private ArrayList<SharedFood> sharedFoods = new ArrayList<>();
     private ArrayList<SharedFood> displayedItems = new ArrayList<>();
     private ListView mListView;
 
-    public static MainMapFragment newInstance()
+    public static MainFragment newInstance()
     {
-        MainMapFragment fragment = new MainMapFragment();
+        MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -45,9 +41,6 @@ public class MainMapFragment extends Fragment implements TextView.OnEditorAction
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View v = inflater.inflate(R.layout.fragment_main_list, container, false);
-
         sharedFoods.add(new SharedFood("Apples for sale 30% off", new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(),
                 new GregorianCalendar(2014, Calendar.FEBRUARY, 23).getTime(), "Shilin Carrefour", "shared_apples"));
 
@@ -59,6 +52,8 @@ public class MainMapFragment extends Fragment implements TextView.OnEditorAction
 
         sharedFoods.add(new SharedFood("Free pizza for everyone", new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(),
                 new GregorianCalendar(2014, Calendar.FEBRUARY, 18).getTime(), "NTU CSIE Building", "shared_pizza"));
+
+        View v = inflater.inflate(R.layout.fragment_main_list, container, false);
 
         displayedItems.clear();
         displayedItems.addAll(sharedFoods);
@@ -73,6 +68,7 @@ public class MainMapFragment extends Fragment implements TextView.OnEditorAction
 
         return v;
     }
+
 
     @Override
     public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
