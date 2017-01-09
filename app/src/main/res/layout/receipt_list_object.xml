@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <LinearLayout
+        android:id="@+id/listFoodInfoSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/listFoodImage"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/receiptDetailsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text=""
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/receiptDetailsLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Location: "
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/receiptDetailsDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Date: "
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/receiptDetailsTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Total: "
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/receiptDetailList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Details: "
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</RelativeLayout>

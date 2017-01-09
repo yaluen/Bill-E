@@ -12,6 +12,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -61,6 +63,8 @@ public class ReceiptSearchFragment extends Fragment implements TextView.OnEditor
     private final String[] SHOPS = {"7-11","7-11","Family Markt","Carrefour","7-11",
             "Family Markt","Burger King","Gap","Fitch","Appel Store",};
 
+    private LayoutInflater inflater;
+
     public ReceiptSearchFragment()
     {
         // Required empty public constructor
@@ -99,6 +103,7 @@ public class ReceiptSearchFragment extends Fragment implements TextView.OnEditor
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
+        this.inflater = inflater;
         View v = inflater.inflate(R.layout.fragment_search_receipt, container, false);
         Spinner spinner = (Spinner) v.findViewById(R.id.bill_sort_spinner);
         ArrayAdapter <CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(),R.array.sort_options,android.R.layout.simple_spinner_item);
@@ -178,28 +183,28 @@ public class ReceiptSearchFragment extends Fragment implements TextView.OnEditor
             price.setTextSize(CONTENT_TEXTSIZE);
             price.setGravity(Gravity.CENTER);
             //Set row id and on click listener
-            final TextView msg = new TextView(c);
-            msg.setText(builtTextToDisplay(i));
-            msg.setPadding(10, 10, 10, 10);
-            msg.setGravity(Gravity.LEFT);
-            msg.setTextSize(18);
+            //            final TextView msg = new TextView(c);
             row.setClickable(true);
             row.setId(i);
+            final int b = i;
             row.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view)
                 {
+                    View receipts_details = (View) getActivity().getLayoutInflater().inflate(R.layout.receipt_list_object, null);
+                    View receipts_details_final = builtTextToDisplay(b, receipts_details);
                     final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Change Element");
-                    builder.setView(msg).setCancelable(true);
-                    builder.setPositiveButton("close",new DialogInterface.OnClickListener()
+//                    builder.setTitle("Change Element");
+                    builder.setView(receipts_details_final).setCancelable(true);
+                    builder.setPositiveButton("Close",new DialogInterface.OnClickListener()
                     {
                         public void onClick(DialogInterface dialog,int id)
                         {
                             dialog.cancel();
                         }
                     });
-                    final AlertDialog dialog = builder.create();
+                    AlertDialog dialog = builder.create();
+                    dialog.setCanceledOnTouchOutside(true);
                     dialog.show();
                 }
             });
@@ -211,17 +216,22 @@ public class ReceiptSearchFragment extends Fragment implements TextView.OnEditor
             table.addView(row);
         }
     }
-    private CharSequence builtTextToDisplay(int pos)
+    private View builtTextToDisplay(int pos, View v)
     {
         Bill bill = displayedItems.get(pos);
         StringBuilder b = new StringBuilder();
-        b.append("Location:          ");
-        b.append(bill.getLocation()+"\n");
-        b.append("date                  ");
-        b.append(dateformat.format(bill.getDate())+"\n");
-        b.append("Total:                ");
-        b.append(bill.getTotal()+"\n\n");
-        b.append("Details \n");
+        ((TextView)v.findViewById(R.id.receiptDetailsTitle)).setText("Receipt Details");
+        ((TextView)v.findViewById(R.id.receiptDetailsLocation)).setText("Location: " + bill.getLocation());
+        ((TextView)v.findViewById(R.id.receiptDetailsDate)).setText("Date: " + dateformat.format(bill.getDate()));
+        ((TextView)v.findViewById(R.id.receiptDetailsTotal)).setText("Total: " + bill.getTotal());
+        ((TextView)v.findViewById(R.id.receiptDetailList)).setText("Details \n\n");
+//        b.append("Location:          ");
+//        b.append(bill.getLocation()+"\n");
+//        b.append("date                  ");
+//        b.append(dateformat.format(bill.getDate())+"\n");
+//        b.append("Total:                ");
+//        b.append(bill.getTotal()+"\n\n");
+//        b.append("Details \n");
         String details = bill.getDetails();
         String [] detailsSplit = details.split(",");
         for(String s :detailsSplit)
@@ -229,10 +239,12 @@ public class ReceiptSearchFragment extends Fragment implements TextView.OnEditor
             String [] singleDetailArray = s.split(" ");
             if(singleDetailArray.length == 2)
             {
-                b.append(singleDetailArray[0]+"          "+singleDetailArray[1]+"\n");
+                String temp = ((TextView)v.findViewById(R.id.receiptDetailList)).getText().toString();
+                temp = temp + singleDetailArray[0]+" - "+singleDetailArray[1]+"\n\n";
+                ((TextView)v.findViewById(R.id.receiptDetailList)).setText(temp);
             }
         }
-        return b.toString();
+        return v;
     }
     @Override
     public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent)
